@@ -20,30 +20,32 @@
 //
 // TODO: Add code to display the current date in the header of the page.
 
-function init() {
-  var currentDay = dayjs().format('dddd, MMM D')
-  var currentHour = dayjs().format('HH');
-  console.log(currentDay);
-  console.log(currentHour);
-
-  $('#currentDay').text(currentDay);
-
-  setHour(currentHour);
-}
-
-function setHour(currentHour) {
+$(function() {
+  console.log( "ready!" );
+  function init() {
+    var currentDay = dayjs().format('dddd, MMM D')
+    var currentHour = dayjs().format('HH');
+    console.log(currentDay);
+    console.log(currentHour);
   
-  for (let i = 9; i <= 17; i++) {
-    var timeBlock = $(`#hour-${i}`);
-    console.log(timeBlock);
-    if (currentHour > i) {
-      $(`#hour-${i}`).addClass('past');
-    } else if (currentHour == i) {
-       $(`#hour-${i}`).addClass('present');
-    } else {
-      $(`#hour-${i}`).addClass('future');
+    $('#currentDay').text(currentDay);
+  
+    setHour(currentHour);
+  }
+  
+  function setHour(currentHour) {
+    
+    for (let i = 9; i <= 17; i++) {
+      var timeBlock = $(`#hour-${i}`);
+      console.log(timeBlock);
+      if (currentHour > i) {
+        $(`#hour-${i}`).addClass('past');
+      } else if (currentHour == i) {
+         $(`#hour-${i}`).addClass('present');
+      } else {
+        $(`#hour-${i}`).addClass('future');
+      }
     }
   }
-}
-init();
-
+  init();
+});

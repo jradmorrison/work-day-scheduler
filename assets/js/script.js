@@ -52,9 +52,9 @@ $(function () {
   console.log("ready!");
 
 
-  // ============================= Initialization function =========================================
+  // ============================= Initialization function ========================================
   function init() {
-    var currentDay = dayjs().format('dddd, MMM D')
+    var currentDay = dayjs().format('dddd, MMMM D')
     var currentHour = dayjs().format('HH');
     console.log(currentDay);
     console.log(currentHour);
@@ -62,15 +62,24 @@ $(function () {
     $('#currentDay').text(currentDay);
 
     setHour(currentHour);
-    var storedData = getData();
-    console.log(storedData)
 
     for (let i = 0; i < hourBlocks.length; i++) {
-      if (storedData.hour === hourBlocks[i]) {
-
-      }    
+      let hour = `${hourBlocks[i]}`
+      var text = checkData(hour);
+      $(`#${hour}`).children('textarea').text(text)
     }
   }
+  // Check 
+  function checkData(hour) {
+    
+    var data = getData()
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].hour == hour) {
+        return data[i].calendarEntry;
+      }
+    }
+  }
+  
   // ================ Sets the class of the time blocks based on current time =====================
   function setHour(currentHour) {
 
@@ -88,12 +97,12 @@ $(function () {
     }
   }
 
-  // ================== Refreshes the page after 15 mins to update class of time blocks ==============
+  // =============== Refreshes the page after 15 mins to update class of time blocks ==============
   function refresh() {
     location.reload();
   }
 
-  // ========================= Saves text in text area to an object ============================
+  // =========================== Saves text in text area to an object =============================
   function saveData() {
 
     var divEl = $(this).parent();
@@ -104,13 +113,13 @@ $(function () {
     } else {
       newData = {
         hour: divEl.attr('id'),
-        calenderEntry: entry
+        calendarEntry: entry
       }
     }
 
     addData(newData);
   }
-// ========================= adding both stored and new data to data array =============================
+// ========================= adding both stored and new data to data array ========================
   function addData(newData) {
     data = getData();
     data.push(newData);
@@ -125,9 +134,14 @@ $(function () {
     } else {
       return emptyArr;
     }
+    // if (storedData == null) {
+    //   return storedData = [];
+    // } else {
+    //   return storedData;
+    // }
   }
 
-  // =============================== stores object in local storage =====================================
+  // =============================== stores object in local storage ===============================
   function storeData() {
     localStorage.setItem("calendarData", JSON.stringify(data));
   }

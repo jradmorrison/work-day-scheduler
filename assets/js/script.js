@@ -19,7 +19,7 @@ $(function () {
 
   // ============================= Initialization function ========================================
   function init() {
-    var currentDay = dayjs().format('dddd, MMMM D')
+    var currentDay = dayjs().format('dddd, MMMM D, YYYY')
     var currentHour = dayjs().format('HH');
     console.log(currentDay);
     console.log(currentHour);
